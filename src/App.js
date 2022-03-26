@@ -1,24 +1,43 @@
-import logo from './logo.svg';
+import '@fontsource/poppins';
+import {
+  Container,
+  createTheme,
+  ThemeProvider,
+} from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-
+import Header from './components/Header';
+import HomePage from './features/HomePage';
+import Products from './features/Products';
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#009688',
+    },
+  },
+  typography: {
+    fontFamily: 'Poppins',
+  },
+});
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Header />
+        <Container>
+          <Routes>
+            <Route
+              path="/"
+              element={<HomePage />}
+            />
+            <Route
+              path="/products/*"
+              element={<Products />}
+            />
+          </Routes>
+        </Container>
+      </div>
+    </ThemeProvider>
   );
 }
 
