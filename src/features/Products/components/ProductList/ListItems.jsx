@@ -3,10 +3,10 @@ import React from 'react';
 import { dataFake } from '../../../../data';
 import ListItemCard from './ListItemCard';
 
-function ListItems(props) {
+function ListItems({ productList }) {
   return (
     <Grid container>
-      {dataFake.map((item) => (
+      {productList.map((item) => (
         <Grid
           key={item.id}
           item

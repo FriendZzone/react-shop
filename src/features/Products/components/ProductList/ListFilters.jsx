@@ -6,33 +6,51 @@ import {
   ListItem,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-function ListFilters(props) {
+import { productApi } from '../../../../api/productApi';
+function ListFilters({ setCategory }) {
+  const [categories, setCategories] = useState(
+    []
+  );
+  useEffect(() => {
+    (async () => {
+      const res =
+        await productApi.getCategoriesNames();
+      console.log(res);
+      setCategories(res.data);
+    })();
+  }, []);
+  const handleCategoryChange = (value) => {
+    setCategory(value);
+  };
   return (
     <Box>
-      <Typography variant="h6" color="primary">
+      <Typography
+        align="center"
+        variant="h6"
+        color="primary"
+      >
         <FilterAltIcon />
         Filters :
       </Typography>
       <Divider />
-      ListFilters
       <List>
-        <ListItem>
-          <Button fullWidth>Price</Button>
-        </ListItem>
-        <ListItem>
-          <Button fullWidth>Category</Button>
-        </ListItem>
-        <ListItem>
-          <Button fullWidth>Location</Button>
-        </ListItem>
-        <ListItem>
-          <Button fullWidth>Year</Button>
-        </ListItem>
-        <ListItem>
-          <Button fullWidth>Price</Button>
-        </ListItem>
+        {categories.map((item) => (
+          <ListItem key={item}>
+            <Button
+              fullWidth
+              onClick={() =>
+                handleCategoryChange(item)
+              }
+            >
+              {item}
+            </Button>
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
