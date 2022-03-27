@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Card,
   Grid,
   Typography,
 } from '@mui/material';
@@ -24,8 +23,35 @@ const useStyle = makeStyles((theme) => ({
     width: '60px',
   },
 }));
-function ItemSeller({ seller, image }) {
+function ItemSeller() {
   const classes = useStyle();
+  const sellerImage = {
+    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
+    id: '6',
+  };
+  const seller = {
+    address: {
+      geolocation: {
+        lat: '-37.3159',
+        long: '81.1496',
+      },
+      city: 'kilcoole',
+      street: 'new road',
+      number: 7682,
+      zipcode: '12926-3874',
+    },
+    id: 1,
+    email: 'john@gmail.com',
+    username: 'johnd',
+    password: 'm38rmF$',
+    name: {
+      firstname: 'john',
+      lastname: 'doe',
+    },
+    phone: '1-570-236-7033',
+    __v: 0,
+  };
+  console.log(seller);
   return (
     <Box className={classes.root}>
       <Grid container>
@@ -39,7 +65,7 @@ function ItemSeller({ seller, image }) {
             </Typography>
             <Avatar
               className={classes.avatar}
-              src={image.img}
+              src={sellerImage.img}
             />
             <Typography
               variant="subtitle1"

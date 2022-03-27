@@ -3,12 +3,8 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { productApi } from '../../../api/productApi';
-import { productsListSelector } from '../../../app/selectors';
 import ListFilters from '../components/ProductList/ListFilters';
 import ListItems from '../components/ProductList/ListItems';
 import ProductsListSkeleton from '../components/ProductsSkeleton/ProductsListSkeleton';

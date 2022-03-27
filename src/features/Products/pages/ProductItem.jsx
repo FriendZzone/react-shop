@@ -21,65 +21,49 @@ import {
   formatCurrency,
   getRandomUser,
   getRandomPicture,
+  getRandomSeller,
 } from '../../../utils';
 import Zoom from 'react-img-zoom';
 import ItemSeller from '../components/ProductItem/ItemSeller';
 import ListItemCard from '../components/ProductList/ListItemCard';
+import RelatedProductsList from '../components/ProductItem/RelatedProductsList';
+import ItemInfo from '../components/ProductItem/ItemInfo';
+import ItemImage from '../components/ProductItem/ItemImage';
 function ProductItem() {
+  const { id } = useParams();
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [
     relatedProductsList,
     setRelatedProductsList,
   ] = useState([]);
-  const { id } = useParams();
   const [notFound, setNotFound] = useState(false);
-  const [seller, setSeller] = useState({});
-  const matches = useMediaQuery(
-    '(min-width:600px)'
-  );
+
   useEffect(() => {
     (async () => {
-      setLoading(true);
       try {
+        setLoading(true);
         const res = await productApi.getProduct(
           id
         );
-        setProduct(res.data);
-        const { category } = res.data;
-        const res2 =
+        const { data } = res;
+        const { category } = data;
+        const categoryRes =
           await productApi.getByCategory(
             category
           );
-        setRelatedProductsList(res2.data);
-        const res3 = await getRandomUser();
-        setSeller(res3.data);
+
+        setRelatedProductsList(categoryRes.data);
+        setProduct(data);
         setLoading(false);
       } catch (err) {
         console.log('catch');
-        // try {
-        //   const res = JSON.parse(
-        //     localStorage.getItem('productsList')
-        //   ).find((item) => item.id == id);
-        //   setProduct(res);
-        //   const { category } = res;
-        //   const res2 =
-        //     await productApi.getByCategory(
-        //       category
-        //     );
-        //   setRelatedProductsList(res2.data);
-        //   setLoading(false);
-        // } catch (err) {
-        //   setNotFound(true);
-        //   setLoading(false);
-        // }
         setNotFound(true);
         setLoading(false);
       }
     })();
   }, [id]);
-  const sellerImage = getRandomPicture();
-  console.log(seller);
+
   if (notFound) {
     return <NotFound />;
   }
@@ -88,118 +72,30 @@ function ProductItem() {
   }
   return (
     <Box>
+      {console.log(product)}
       <Paper>
         <Container>
           <Grid container>
             <Grid item xs={12} sm={5}>
-              <Box
-                padding={2}
-                sx={{
-                  display: 'flex',
-                  overflow: ' hidden',
-                  objectFit: 'contain',
-                }}
-              >
-                {matches ? (
-                  <Zoom
-                    img={product.image}
-                    zoomScale={3}
-                    height={300}
-                    width={480}
-                  />
-                ) : (
-                  <img
-                    width="100%"
-                    src={product.image}
-                    alt={product.title}
-                  />
-                )}
-              </Box>
+              <ItemImage product={product} />
               <Typography variant="body1">
                 Sold: {product.rating.count}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={7}>
-              <Box padding={3} paddingRight={1}>
-                <Typography
-                  variant="h5"
-                  fontWeight="bold"
-                >
-                  {product.title}
-                </Typography>
-                <Typography
-                  variant="subtitle1"
-                  component="span"
-                >
-                  {product.rating.rate}
-                </Typography>
-                <Rating
-                  name="read-only"
-                  value={product.rating.rate}
-                  readOnly
-                  size="small"
-                />
-                <Typography
-                  variant="h4"
-                  color="secondary"
-                  gutterBottom
-                >
-                  {formatCurrency(product.price)}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  gutterBottom
-                >
-                  {product.description}
-                </Typography>
+              <ItemInfo product={product} />
+            </Grid>
+            <Grid item sx={{ width: '100%' }}>
+              <Divider />
+              <ItemSeller />
+            </Grid>
 
-                <Button variant="contained">
-                  Add to card
-                </Button>
-              </Box>
-            </Grid>
-            <Grid item sx={{ width: '100%' }}>
-              <Divider />
-              <ItemSeller
-                seller={seller}
-                image={sellerImage}
-              />
-            </Grid>
-            <Grid item sx={{ width: '100%' }}>
-              <Divider />
-              <Typography
-                sx={{ marginTop: '2%' }}
-                variant="h6"
-              >
-                Related to{' '}
-                <Typography
-                  variant="h6"
-                  component="span"
-                  color="primary"
-                >
-                  {product.category}{' '}
-                </Typography>
-                category:
-              </Typography>
-              <Grid container padding={1}>
-                {relatedProductsList.map(
-                  (item) => (
-                    <Grid
-                      key={item.id}
-                      item
-                      xs={8}
-                      sm={8}
-                      md={3}
-                      sx={{ margin: '0 auto' }}
-                    >
-                      <ListItemCard
-                        product={item}
-                      />
-                    </Grid>
-                  )
-                )}
-              </Grid>
-            </Grid>
+            <RelatedProductsList
+              id={id}
+              relatedProductsList={
+                relatedProductsList
+              }
+            />
           </Grid>
         </Container>
       </Paper>

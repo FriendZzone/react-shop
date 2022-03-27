@@ -7,13 +7,9 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '../../../../utils';
 import CardInfo from './CardInfo';
-import {
-  useNavigate,
-  Link,
-} from 'react-router-dom';
-import ProductItem from '../../pages/ProductItem';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '10px',
