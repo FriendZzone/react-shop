@@ -1,11 +1,7 @@
 import {
-  Avatar,
   Box,
   Button,
-  Card,
-  Dialog,
-  DialogTitle,
-  Fade,
+  Divider,
   Rating,
   Typography,
 } from '@mui/material';
@@ -13,11 +9,17 @@ import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import { formatCurrency } from '../../../../utils';
 import CardInfo from './CardInfo';
+import {
+  useNavigate,
+  Link,
+} from 'react-router-dom';
+import ProductItem from '../../pages/ProductItem';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '10px',
     position: 'relative',
     transition: 'all .4s',
+    marginTop: '5%',
     '&:hover': {
       transform: 'translateY(-4px)',
       boxShadow: `0px 4px 0px 0px ${theme.palette.primary.main}`,
@@ -36,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginLeft: 'auto',
+    zIndex: 100,
   },
   rating: {
     fontSize: '16px',
@@ -44,19 +47,22 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: '3%',
   },
 }));
 function ListItemCard({ product }) {
   const classes = useStyles();
-  const [openQuickLook, setOpenQuickLook] =
+  const navigate = useNavigate();
+  const [openQuickView, setOpenQuickView] =
     useState(false);
 
-  const handleClickQuickLook = () => {
-    setOpenQuickLook((prev) => !prev);
+  const handleClickQuickView = () => {
+    setOpenQuickView((prev) => !prev);
   };
+
   return (
     <Box className={classes.root}>
-      {openQuickLook && (
+      {openQuickView && (
         <CardInfo product={product} />
       )}
 
@@ -87,18 +93,39 @@ function ListItemCard({ product }) {
           />
           <Button
             className={classes.button}
-            variant="outlined"
+            variant={
+              openQuickView
+                ? 'contained'
+                : 'outlined'
+            }
             align="right"
             size="small"
-            onClick={handleClickQuickLook}
+            onClick={handleClickQuickView}
             sx={{ fontSize: '10px' }}
           >
-            {openQuickLook
+            {openQuickView
               ? 'Hide'
-              : 'Quick Look'}
+              : 'Quick View'}
           </Button>
         </Box>
       </Box>
+
+      <Button
+        fullWidth
+        size="small"
+        variant="contained"
+        onClick={() => {
+          navigate(`/products/${product.id}`, {
+            state: product,
+          });
+
+          window.scrollTo(0, 0);
+        }}
+      >
+        Buy
+      </Button>
+
+      <Divider />
     </Box>
   );
 }

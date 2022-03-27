@@ -1,6 +1,5 @@
 import { Grid } from '@mui/material';
 import React from 'react';
-import { dataFake } from '../../../../data';
 import ListItemCard from './ListItemCard';
 
 function ListItems({ productList }) {

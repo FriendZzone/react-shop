@@ -20,7 +20,6 @@ function ListFilters({ setCategory }) {
     (async () => {
       const res =
         await productApi.getCategoriesNames();
-      console.log(res);
       setCategories(res.data);
     })();
   }, []);

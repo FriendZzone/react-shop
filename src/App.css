@@ -1,3 +1,15 @@
 html {
   background-color: rgb(230, 230, 230);
+  scroll-behavior: smooth;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+::-webkit-scrollbar {
+  display: none;
 }

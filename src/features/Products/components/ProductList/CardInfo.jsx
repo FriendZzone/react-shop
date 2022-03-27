@@ -8,6 +8,7 @@ import React from 'react';
 import './style.css';
 const useStyles = makeStyles((theme) => ({
   root: {
+    zIndex: 10,
     position: 'absolute',
     animation: 'fadeIn .5s',
     width: '90%',
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'auto',
     paddingBottom: '12px',
     borderRadius: '5px',
+    border: `1px solid ${theme.palette.primary.main}`,
     backgroundColor: theme.palette.common.white,
   },
   title: {
@@ -38,7 +40,7 @@ function CardInfo({ product }) {
         variant="subtitle2"
         className={classes.title}
       >
-        Quick look :
+        Quick view :
       </Typography>
       <Box className={classes.information}>
         <Typography variant="h6" gutterBottom>

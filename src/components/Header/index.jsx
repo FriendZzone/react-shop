@@ -32,6 +32,13 @@ function Header(props) {
           >
             React Shop
           </Typography>
+          <Button
+            color="inherit"
+            onClick={() => navigate('products')}
+          >
+            Products
+          </Button>
+
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>

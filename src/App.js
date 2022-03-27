@@ -1,11 +1,11 @@
 import '@fontsource/poppins';
-import { Container } from '@mui/material';
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
 import {
+  Container,
   createTheme,
   ThemeProvider,
 } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
 import Header from './components/Header';
 import HomePage from './features/HomePage';
 import Products from './features/Products';

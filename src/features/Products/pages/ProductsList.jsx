@@ -3,31 +3,59 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
 import { productApi } from '../../../api/productApi';
+import { productsListSelector } from '../../../app/selectors';
 import ListFilters from '../components/ProductList/ListFilters';
 import ListItems from '../components/ProductList/ListItems';
+import ProductsListSkeleton from '../components/ProductsSkeleton/ProductsListSkeleton';
+import { getAllProducts } from '../productSlice';
 
 function ProductsList(props) {
   const [category, setCategory] = useState('');
   const [productList, setProductList] = useState(
     []
   );
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+
+        const res =
+          (await JSON.parse(
+            localStorage.getItem('productsList')
+          )) ||
+          (await dispatch(
+            getAllProducts()
+          ).unwrap());
+        setProductList(res);
+        setLoading(false);
+      } catch (err) {
+        setLoading(true);
+
+        console.log(err);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
-      const res =
-        await productApi.getAllProducts();
-      setProductList(res.data);
-    })();
-  }, []);
-  useEffect(() => {
-    (async () => {
+      setLoading(true);
+
       const res = await productApi.getByCategory(
         category
       );
+      setLoading(false);
+
       setProductList(res.data);
     })();
   }, [category]);
+
   return (
     <Box>
       <Paper elevation={0}>
@@ -48,9 +76,13 @@ function ProductsList(props) {
             />
           </Grid>
           <Grid item xs={12} sm={9}>
-            <ListItems
-              productList={productList}
-            />
+            {loading ? (
+              <ProductsListSkeleton length={12} />
+            ) : (
+              <ListItems
+                productList={productList}
+              />
+            )}
           </Grid>
         </Grid>
       </Paper>
