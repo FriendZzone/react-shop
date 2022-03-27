@@ -1,13 +1,10 @@
 import { Divider } from '@material-ui/core';
 import {
   Box,
-  Button,
   Container,
   Grid,
   Paper,
-  Rating,
   Typography,
-  useMediaQuery,
 } from '@mui/material';
 import React, {
   useEffect,
@@ -17,18 +14,10 @@ import { useParams } from 'react-router-dom';
 import { productApi } from '../../../api/productApi';
 import Loading from '../../../components/Loading';
 import NotFound from '../../../components/NotFound';
-import {
-  formatCurrency,
-  getRandomUser,
-  getRandomPicture,
-  getRandomSeller,
-} from '../../../utils';
-import Zoom from 'react-img-zoom';
-import ItemSeller from '../components/ProductItem/ItemSeller';
-import ListItemCard from '../components/ProductList/ListItemCard';
-import RelatedProductsList from '../components/ProductItem/RelatedProductsList';
-import ItemInfo from '../components/ProductItem/ItemInfo';
 import ItemImage from '../components/ProductItem/ItemImage';
+import ItemInfo from '../components/ProductItem/ItemInfo';
+import ItemSeller from '../components/ProductItem/ItemSeller';
+import RelatedProductsList from '../components/ProductItem/RelatedProductsList';
 function ProductItem() {
   const { id } = useParams();
   const [product, setProduct] = useState({});
