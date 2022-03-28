@@ -3,8 +3,12 @@ import { Box } from '@mui/system';
 import React from 'react';
 import HomeMenu from './components/HomeMenu';
 import ImageMasonry from './components/ImageMasonry';
-
-function HomePage(props) {
+function HomePage({
+  open,
+  setOpen,
+  color,
+  setColor,
+}) {
   return (
     <div>
       <Typography
@@ -17,7 +21,12 @@ function HomePage(props) {
       <Box
         sx={{ display: 'flex', flexWrap: 'wrap' }}
       >
-        <HomeMenu />
+        <HomeMenu
+          open={open}
+          setOpen={setOpen}
+          color={color}
+          setColor={setColor}
+        />
         <ImageMasonry />
       </Box>
     </div>
