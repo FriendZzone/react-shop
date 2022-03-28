@@ -65,12 +65,14 @@ function ProductItem() {
       <Paper>
         <Container>
           <Grid container>
+            {/* Item Pictures */}
             <Grid item xs={12} sm={5}>
               <ItemImage product={product} />
               <Typography variant="body1">
                 Sold: {product.rating.count}
               </Typography>
             </Grid>
+            {/* Item Information */}
             <Grid item xs={12} sm={7}>
               <ItemInfo product={product} />
             </Grid>
@@ -84,6 +86,7 @@ function ProductItem() {
               relatedProductsList={
                 relatedProductsList
               }
+              category={product.category}
             />
           </Grid>
         </Container>

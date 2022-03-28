@@ -5,7 +5,6 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
-import './style.css';
 const useStyles = makeStyles((theme) => ({
   root: {
     zIndex: 10,

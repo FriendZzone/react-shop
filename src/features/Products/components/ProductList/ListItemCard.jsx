@@ -62,7 +62,12 @@ function ListItemCard({ product }) {
         <CardInfo product={product} />
       )}
 
-      <Box className={classes.box}>
+      <Box
+        className={classes.box}
+        onClick={() =>
+          navigate(`/products/${product.id}`)
+        }
+      >
         <img
           className={classes.image}
           alt="123"

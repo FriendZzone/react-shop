@@ -4,35 +4,58 @@ import {
   createTheme,
   ThemeProvider,
 } from '@mui/material';
+import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import HomePage from './features/HomePage';
 import Products from './features/Products';
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#009688',
-    },
-  },
-  typography: {
-    fontFamily: 'Poppins',
-  },
-});
+
+import UserProfile from './features/UserProfile';
 function App() {
+  const [color, setColor] = useState('#009688');
+  const [openDialog, setOpenDialog] =
+    useState(false);
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: color,
+        // main: '#000',
+      },
+    },
+    typography: {
+      fontFamily: 'Poppins',
+    },
+  });
+  console.log(color);
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <Header />
+        <Header
+          open={openDialog}
+          setOpen={setOpenDialog}
+        />
         <Container>
           <Routes>
             <Route
               path="/"
-              element={<HomePage />}
+              element={
+                <HomePage
+                  open={openDialog}
+                  setOpen={setOpenDialog}
+                  setColor={setColor}
+                  color={color}
+                />
+              }
             />
             <Route
               path="/products/*"
               element={<Products />}
+            />
+            <Route
+              path="/users/*"
+              element={<UserProfile />}
             />
           </Routes>
         </Container>

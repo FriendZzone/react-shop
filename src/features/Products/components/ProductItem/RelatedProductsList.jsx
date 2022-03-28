@@ -8,6 +8,7 @@ import ListItemCard from '../ProductList/ListItemCard';
 
 function RelatedProductsList({
   relatedProductsList,
+  category,
 }) {
   return (
     <Grid item sx={{ width: '100%' }}>
@@ -16,13 +17,13 @@ function RelatedProductsList({
         sx={{ marginTop: '2%' }}
         variant="h6"
       >
-        Related to{' '}
+        Related to {}
         <Typography
           variant="h6"
           component="span"
           color="primary"
         >
-          {}{' '}
+          {category}{' '}
         </Typography>
         category:
       </Typography>

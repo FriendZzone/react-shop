@@ -6,11 +6,20 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { useNavigate } from 'react-router-dom';
-function Header(props) {
+import Authentication from '../../features/Authentication';
+function Header({ open, setOpen }) {
   const navigate = useNavigate();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -39,7 +48,16 @@ function Header(props) {
             Products
           </Button>
 
-          <Button color="inherit">Login</Button>
+          <Button
+            onClick={handleClickOpen}
+            color="inherit"
+          >
+            Login
+          </Button>
+          <Authentication
+            open={open}
+            handleClose={handleClose}
+          />
         </Toolbar>
       </AppBar>
     </Box>

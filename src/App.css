@@ -13,3 +13,7 @@ html {
 ::-webkit-scrollbar {
   display: none;
 }
+.color-picker .react-colorful {
+  margin: 0 auto;
+  height: 100px;
+}

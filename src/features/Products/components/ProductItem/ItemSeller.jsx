@@ -9,7 +9,7 @@ import React from 'react';
 import { formatToUpperFirstCase } from '../../../../utils';
 const useStyle = makeStyles((theme) => ({
   root: {
-    marginTop: '4%',
+    margin: '2% 0',
   },
   leftBox: {
     width: '100%',
