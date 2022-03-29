@@ -1,3 +1,4 @@
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import {
   AppBar,
   Box,
@@ -6,20 +7,15 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Authentication from '../../features/Authentication';
-function Header({ open, setOpen }) {
+import HeaderUserMenu from './components/HeaderUserMenu';
+function Header() {
   const navigate = useNavigate();
+  const loginStatus = JSON.parse(
+    localStorage.getItem('loginReactShop')
+  );
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -47,17 +43,22 @@ function Header({ open, setOpen }) {
           >
             Products
           </Button>
-
-          <Button
-            onClick={handleClickOpen}
-            color="inherit"
-          >
-            Login
-          </Button>
-          <Authentication
-            open={open}
-            handleClose={handleClose}
-          />
+          {loginStatus ? (
+            <HeaderUserMenu />
+          ) : (
+            <Button
+              onClick={() =>
+                navigate('register', {
+                  state: {
+                    loginOption: true,
+                  },
+                })
+              }
+              color="inherit"
+            >
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

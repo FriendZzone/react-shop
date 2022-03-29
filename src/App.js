@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
+import Authentication from './features/Authentication';
 import HomePage from './features/HomePage';
 import Products from './features/Products';
 
@@ -28,7 +29,7 @@ function App() {
       fontFamily: 'Poppins',
     },
   });
-  console.log(color);
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
@@ -56,6 +57,10 @@ function App() {
             <Route
               path="/users/*"
               element={<UserProfile />}
+            />
+            <Route
+              path="/register/*"
+              element={<Authentication />}
             />
           </Routes>
         </Container>

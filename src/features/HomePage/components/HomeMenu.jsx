@@ -79,7 +79,11 @@ function HomeMenu({
         <ButtonGroup variant="contained">
           <Button
             onClick={() =>
-              setOpen((prev) => !prev)
+              navigate('register', {
+                state: {
+                  loginOption: true,
+                },
+              })
             }
           >
             Login
@@ -87,7 +91,11 @@ function HomeMenu({
 
           <Button
             onClick={() =>
-              setOpen((prev) => !prev)
+              navigate('register', {
+                state: {
+                  loginOption: false,
+                },
+              })
             }
           >
             Register

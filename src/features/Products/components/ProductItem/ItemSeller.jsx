@@ -51,7 +51,6 @@ function ItemSeller() {
     phone: '1-570-236-7033',
     __v: 0,
   };
-  console.log(seller);
   return (
     <Box className={classes.root}>
       <Grid container>

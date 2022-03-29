@@ -7,21 +7,46 @@ import { userApi } from '../../api/userApi';
 export const addUser = createAsyncThunk(
   'user/addUser',
   async (userData, thunkAPI) => {
-    const response = await userApi.addUser(
-      userData
-    );
+    try {
+      const response = await userApi.addUser(
+        userData
+      );
 
-    localStorage.setItem(
-      'userDataReactShop',
-      JSON.stringify(response.data)
-    );
-    return userData;
+      localStorage.setItem(
+        'userDataReactShop',
+        JSON.stringify(response.data)
+      );
+      localStorage.setItem(
+        'loginReactShop',
+        true
+      );
+
+      return userData;
+    } catch (err) {
+      localStorage.setItem(
+        'userDataReactShop',
+        JSON.stringify(userData)
+      );
+      localStorage.setItem(
+        'loginReactShop',
+        true
+      );
+
+      return userData;
+    }
   }
 );
 const initialState = {
   login: false,
   data: {
-    loginData: {},
+    userData:
+      JSON.parse(
+        localStorage.getItem('userDataReactShop')
+      ) || {},
+    loginData:
+      JSON.parse(
+        localStorage.getItem('loginDataReactShop')
+      ) || {},
     products: {},
   },
 };
@@ -31,16 +56,31 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.login = true;
+      localStorage.setItem(
+        'loginReactShop',
+        true
+      );
+      localStorage.setItem(
+        'loginDataReactShop',
+        JSON.stringify(action.payload)
+      );
+
       state.data.loginData = action.payload;
     },
     logout: (state) => {
       state.login = false;
-      state.data = {};
+      state.data.loginData = {};
+      state.data.userData = {};
+      localStorage.setItem(
+        'loginReactShop',
+        false
+      );
     },
   },
   extraReducers: {
     [addUser.fulfilled]: (state, action) => {
-      state.data.loginData = action.payload;
+      state.login = true;
+      state.data.userData = action.payload;
     },
   },
 });

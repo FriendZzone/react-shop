@@ -61,7 +61,6 @@ function ProductItem() {
   }
   return (
     <Box>
-      {console.log(product)}
       <Paper>
         <Container>
           <Grid container>

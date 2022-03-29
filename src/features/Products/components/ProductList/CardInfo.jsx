@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 function CardInfo({ product }) {
   const classes = useStyles();
-  console.log(product);
   return (
     <Box className={classes.root}>
       <Typography

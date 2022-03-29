@@ -6,6 +6,12 @@ import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -17,27 +23,29 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 auto',
   },
 }));
-function Authentication({ open, handleClose }) {
+function Authentication() {
+  const location = useLocation();
+
+  const navigate = useNavigate();
   const classes = useStyles();
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(
+    location.state?.loginOption
+  );
+
+  const handleClose = () => {
+    navigate('/');
+  };
   const handleToggleLogin = () => {
     setLogin((prev) => !prev);
   };
 
   return (
-    <Dialog
-      className={classes.root}
-      open={open}
-      onClose={handleClose}
-    >
+    <Dialog className={classes.root} open>
       <DialogTitle className={classes.title}>
         Welcome to React Shop !
       </DialogTitle>
-      {login ? (
-        <Login onClose={handleClose} />
-      ) : (
-        <SignUp onClose={handleClose} />
-      )}
+
+      {login ? <Login /> : <SignUp />}
       <Button
         className={classes.toggleButton}
         onClick={handleToggleLogin}

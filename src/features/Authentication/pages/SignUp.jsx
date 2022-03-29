@@ -14,10 +14,10 @@ import InputField from '../../../components/form-controls/InputField/InputField'
 import PasswordField from '../../../components/form-controls/PasswordField/PasswordField';
 import RadioField from '../../../components/form-controls/RadioField/RadioField';
 import { addUser } from '../userSlice';
-
-function SignUp({ onClose }) {
+import { useNavigate } from 'react-router-dom';
+function SignUp() {
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const schema = yup
     .object({
@@ -68,7 +68,7 @@ function SignUp({ onClose }) {
       ).unwrap();
       console.log(res);
       setLoading(false);
-      onClose();
+      navigate('/products');
     } catch (err) {
       setLoading(false);
     }

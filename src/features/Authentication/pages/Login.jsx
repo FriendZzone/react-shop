@@ -8,23 +8,23 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
 import * as yup from 'yup';
 import InputField from '../../../components/form-controls/InputField/InputField';
 import PasswordField from '../../../components/form-controls/PasswordField/PasswordField';
+import { userLoginData } from '../userSelectors';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../userSlice';
 function Login({ onClose }) {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const schema = yup
     .object({
-      firstName: yup
-        .string()
-        .required('Please input this field'),
-      lastName: yup
-        .string()
-        .required('Please input this field'),
       email: yup
         .string()
         .email('Invalid Email Address')
@@ -36,36 +36,30 @@ function Login({ onClose }) {
           'Password must has at least 6 characters'
         )
         .required('Please input this field'),
-      retypePassword: yup
-        .string()
-        .required('Retype your password')
-        .oneOf(
-          [yup.ref('password')],
-          'Password does not match'
-        ),
-      gender: yup.string(),
     })
     .required();
   const form = useForm({
     defaultValues: {
       email: '',
-      firstName: '',
-      lastName: '',
       password: '',
-      retypePassword: '',
-      gender: '',
     },
     resolver: yupResolver(schema),
   });
   const onSubmit = async (value) => {
     try {
       setLoading(true);
-      const res = await dispatch(
-        login(value)
-      ).unwrap();
-      console.log(res);
-      setLoading(false);
-      onClose();
+      const loginData = JSON.parse(
+        localStorage.getItem('userDataReactShop')
+      );
+      if (
+        loginData.email === value.email &&
+        loginData.password === value.password
+      ) {
+        const res = await dispatch(login(value));
+        navigate('/products');
+      } else {
+        setLoading(false);
+      }
     } catch (err) {
       setLoading(false);
     }

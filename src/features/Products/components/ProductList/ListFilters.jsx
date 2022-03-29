@@ -33,7 +33,6 @@ function ListFilters({ setCategory }) {
         variant="h6"
         color="primary"
       >
-        <FilterAltIcon />
         Filters :
       </Typography>
       <Divider />
@@ -42,6 +41,7 @@ function ListFilters({ setCategory }) {
           <ListItem key={item}>
             <Button
               fullWidth
+              color="inherit"
               onClick={() =>
                 handleCategoryChange(item)
               }
