@@ -1,4 +1,6 @@
 import { userApi } from '../api/userApi';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const imageData = [
   {
     img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',

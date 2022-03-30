@@ -1,28 +1,34 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Button,
-  Typography,
   LinearProgress,
+  Typography,
 } from '@mui/material';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  useDispatch,
-  useSelector,
-} from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import InputField from '../../../components/form-controls/InputField/InputField';
 import PasswordField from '../../../components/form-controls/PasswordField/PasswordField';
-import { userLoginData } from '../userSelectors';
-import { useNavigate } from 'react-router-dom';
 import { login } from '../userSlice';
-function Login({ onClose }) {
+function Login() {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const notify = (type, message) =>
+    toast[type](message, {
+      position: 'top-right',
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+    });
   const schema = yup
     .object({
       email: yup
@@ -56,9 +62,14 @@ function Login({ onClose }) {
         loginData.password === value.password
       ) {
         const res = await dispatch(login(value));
+        notify('success', 'Login Successfully!');
         navigate('/products');
       } else {
         setLoading(false);
+        notify(
+          'error',
+          'incorrect Email or Password !'
+        );
       }
     } catch (err) {
       setLoading(false);

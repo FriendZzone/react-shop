@@ -10,6 +10,7 @@ import {
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderUserMenu from './components/HeaderUserMenu';
+import HeaderCartMenu from './components/HeaderCartMenu';
 function Header() {
   const navigate = useNavigate();
   const loginStatus = JSON.parse(
@@ -43,6 +44,7 @@ function Header() {
           >
             Products
           </Button>
+          <HeaderCartMenu />
           {loginStatus ? (
             <HeaderUserMenu />
           ) : (

@@ -6,15 +6,25 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import Header from './components/Header';
 import Authentication from './features/Authentication';
 import HomePage from './features/HomePage';
 import Products from './features/Products';
-
 import UserProfile from './features/UserProfile';
+import Cart from './features/Cart';
+
 function App() {
-  const [color, setColor] = useState('#009688');
+  const currentColor =
+    JSON.parse(
+      localStorage.getItem(
+        'colorSettingReactShop'
+      )
+    ) || '#009688';
+  const [color, setColor] =
+    useState(currentColor);
   const [openDialog, setOpenDialog] =
     useState(false);
 
@@ -22,7 +32,6 @@ function App() {
     palette: {
       primary: {
         main: color,
-        // main: '#000',
       },
     },
     typography: {
@@ -37,6 +46,7 @@ function App() {
           open={openDialog}
           setOpen={setOpenDialog}
         />
+        <ToastContainer />
         <Container>
           <Routes>
             <Route
@@ -61,6 +71,10 @@ function App() {
             <Route
               path="/register/*"
               element={<Authentication />}
+            />
+            <Route
+              path="/cart/*"
+              element={<Cart />}
             />
           </Routes>
         </Container>

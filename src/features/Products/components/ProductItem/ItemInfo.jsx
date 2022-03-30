@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { formatCurrency } from '../../../../utils';
+import ItemForm from './ItemForm';
 
 function ItemInfo({ product }) {
   return (
@@ -36,9 +37,7 @@ function ItemInfo({ product }) {
         {product.description}
       </Typography>
 
-      <Button variant="contained">
-        Add to card
-      </Button>
+      <ItemForm product={product} />
     </Box>
   );
 }

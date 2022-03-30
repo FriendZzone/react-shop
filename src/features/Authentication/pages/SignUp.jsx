@@ -9,6 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import InputField from '../../../components/form-controls/InputField/InputField';
 import PasswordField from '../../../components/form-controls/PasswordField/PasswordField';
@@ -19,6 +20,16 @@ function SignUp() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const notify = (type, message) =>
+    toast[type](message, {
+      position: 'top-right',
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+    });
   const schema = yup
     .object({
       firstName: yup
@@ -66,8 +77,8 @@ function SignUp() {
       const res = await dispatch(
         addUser(value)
       ).unwrap();
-      console.log(res);
       setLoading(false);
+      notify('success', 'Welcome to React Shop!');
       navigate('/products');
     } catch (err) {
       setLoading(false);

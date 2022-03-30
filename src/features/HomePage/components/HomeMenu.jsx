@@ -34,6 +34,13 @@ function HomeMenu({
 }) {
   const classes = useStyles();
   const navigate = useNavigate();
+  const handleSetColor = (value) => {
+    setColor(value);
+    localStorage.setItem(
+      'colorSettingReactShop',
+      JSON.stringify(value)
+    );
+  };
   return (
     <Box className={classes.root}>
       <Box>
@@ -51,7 +58,7 @@ function HomeMenu({
         <div className="color-picker">
           <HexColorPicker
             color={color}
-            onChange={setColor}
+            onChange={handleSetColor}
           />
         </div>
         <Typography
