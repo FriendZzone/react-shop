@@ -54,9 +54,12 @@ function Login() {
   const onSubmit = async (value) => {
     try {
       setLoading(true);
-      const loginData = JSON.parse(
-        localStorage.getItem('userDataReactShop')
-      );
+      const loginData =
+        JSON.parse(
+          localStorage.getItem(
+            'userDataReactShop'
+          )
+        ) || {};
       if (
         loginData.email === value.email &&
         loginData.password === value.password

@@ -36,7 +36,6 @@ export const productSlice = createSlice({
         'productsList',
         JSON.stringify(action.payload)
       );
-      console.log(action.payload);
       state.productsList = action.payload;
     },
   },

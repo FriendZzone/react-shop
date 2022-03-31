@@ -19,13 +19,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     display: 'flex',
     flex: '1',
+    minWidth: '30%',
+    overflow: 'hidden',
   },
   name: {
     alignItems: 'flex-start',
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden',
   },
   info: {
     display: 'flex',

@@ -11,12 +11,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderUserMenu from './components/HeaderUserMenu';
 import HeaderCartMenu from './components/HeaderCartMenu';
+import { useSelector } from 'react-redux';
+import { isLogged } from '../../features/Authentication/userSelectors';
 function Header() {
   const navigate = useNavigate();
-  const loginStatus = JSON.parse(
-    localStorage.getItem('loginReactShop')
-  );
-
+  const loginStatus = useSelector(isLogged);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -26,12 +25,19 @@ function Header() {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{
+              mr: 2,
+              display: {
+                xs: 'none',
+                sm: 'block',
+              },
+            }}
             onClick={() => navigate('/')}
           >
             <ShoppingBagIcon />
           </IconButton>
           <Typography
+            onClick={() => navigate('/')}
             variant="h6"
             component="div"
             sx={{ flexGrow: 1 }}

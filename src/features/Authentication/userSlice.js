@@ -37,7 +37,10 @@ export const addUser = createAsyncThunk(
   }
 );
 const initialState = {
-  login: false,
+  login:
+    JSON.parse(
+      localStorage.getItem('loginReactShop')
+    ) || false,
   data: {
     userData:
       JSON.parse(
@@ -70,10 +73,16 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.login = false;
       state.data.loginData = {};
-      state.data.userData = {};
       localStorage.setItem(
         'loginReactShop',
         false
+      );
+    },
+    editUserData: (state, action) => {
+      state.data.userData = action.payload;
+      localStorage.setItem(
+        'userDataReactShop',
+        JSON.stringify(action.payload)
       );
     },
   },
@@ -84,5 +93,5 @@ export const userSlice = createSlice({
     },
   },
 });
-export const { login, logout } =
+export const { login, logout, editUserData } =
   userSlice.actions;

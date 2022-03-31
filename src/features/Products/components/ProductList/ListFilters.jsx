@@ -33,7 +33,7 @@ function ListFilters({ setCategory }) {
         variant="h6"
         color="primary"
       >
-        Filters :
+        Categories
       </Typography>
       <Divider />
       <List>

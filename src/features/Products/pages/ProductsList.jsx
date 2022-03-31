@@ -1,4 +1,9 @@
-import { Box, Grid, Paper } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  Paper,
+} from '@mui/material';
 import React, {
   useEffect,
   useState,
@@ -9,12 +14,15 @@ import ListFilters from '../components/ProductList/ListFilters';
 import ListItems from '../components/ProductList/ListItems';
 import ProductsListSkeleton from '../components/ProductsSkeleton/ProductsListSkeleton';
 import { getAllProducts } from '../productSlice';
-
+import Drawer from '@mui/material/Drawer';
+import SearchIcon from '@mui/icons-material/Search';
 function ProductsList(props) {
   const [category, setCategory] = useState('');
   const [productList, setProductList] = useState(
     []
   );
+  const [openDrawer, setOpenDrawer] =
+    useState(false);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,8 +41,6 @@ function ProductsList(props) {
         setLoading(false);
       } catch (err) {
         setLoading(true);
-
-        console.log(err);
       }
     })();
   }, []);
@@ -55,6 +61,33 @@ function ProductsList(props) {
   return (
     <Box>
       <Paper elevation={0}>
+        <Button
+          variant="contained"
+          size="small"
+          sx={{
+            display: {
+              xs: 'flex',
+              sm: 'none',
+            },
+            position: 'fixed',
+            top: '10%',
+            left: '0',
+            zIndex: '10',
+          }}
+          onClick={() => setOpenDrawer(true)}
+          startIcon={<SearchIcon />}
+        >
+          Filters
+        </Button>
+        <Drawer
+          anchor="left"
+          open={openDrawer}
+          onClose={() => setOpenDrawer(false)}
+        >
+          <ListFilters
+            setCategory={setCategory}
+          />
+        </Drawer>
         <Grid container>
           <Grid
             sx={{

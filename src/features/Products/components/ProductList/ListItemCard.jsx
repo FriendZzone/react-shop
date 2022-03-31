@@ -64,9 +64,10 @@ function ListItemCard({ product }) {
 
       <Box
         className={classes.box}
-        onClick={() =>
-          navigate(`/products/${product.id}`)
-        }
+        onClick={() => {
+          window.scrollTo(0, 0);
+          navigate(`/products/${product.id}`);
+        }}
       >
         <img
           className={classes.image}

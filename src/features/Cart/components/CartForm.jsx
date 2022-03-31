@@ -14,18 +14,22 @@ import SelectField from '../../../components/form-controls/SelectField';
 import { deliveryMethods } from '../../../constants';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import { clearCart } from '../cartSlice';
+import { getUserInfo } from '../../Authentication/userSelectors';
+import { convertFullName } from '../../../utils';
 
 function CartForm({ open, handleClose }) {
   const navigate = useNavigate();
-  const defaultName = `${
-    JSON.parse(
-      localStorage.getItem('userDataReactShop')
-    ).firstName
-  } ${
-    JSON.parse(
-      localStorage.getItem('userDataReactShop')
-    ).lastName
-  }`;
+  const dispatch = useDispatch();
+  const user = useSelector(getUserInfo);
+  const fullName = convertFullName(
+    user.firstName,
+    user.lastName
+  );
   const schema = yup
     .object({
       deliveryDate: yup
@@ -41,8 +45,8 @@ function CartForm({ open, handleClose }) {
     .required();
   const form = useForm({
     defaultValues: {
-      fullName: defaultName,
-      address: '',
+      fullName: fullName,
+      address: user.address || '',
       paymentMethod: deliveryMethods[1],
       deliveryDate: '',
     },
@@ -64,7 +68,8 @@ function CartForm({ open, handleClose }) {
       'success',
       'Thank you! Your order has been created'
     );
-    navigate('/products');
+    dispatch(clearCart());
+    navigate('/thanks');
   };
   return (
     <>

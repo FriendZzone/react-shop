@@ -42,8 +42,32 @@ export const cartSlice = createSlice({
         JSON.stringify(state)
       );
     },
+    changeItemQuantity: (state, action) => {
+      const currentIndex = state.cart.findIndex(
+        (item) =>
+          item.id === action.payload.id &&
+          item.option === action.payload.option
+      );
+      state.cart[currentIndex].quantity =
+        action.payload.quantity;
+      localStorage.setItem(
+        'cartReactShop',
+        JSON.stringify(state)
+      );
+    },
+    clearCart: (state) => {
+      state.cart = [];
+      localStorage.setItem(
+        'cartReactShop',
+        JSON.stringify(state)
+      );
+    },
   },
 });
 
-export const { addToCart, removeFromCart } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  changeItemQuantity,
+  clearCart,
+} = cartSlice.actions;

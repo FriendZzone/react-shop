@@ -7,7 +7,12 @@ import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { formatCurrency } from '../../../utils';
-import { removeFromCart } from '../cartSlice';
+import {
+  changeItemQuantity,
+  removeFromCart,
+} from '../cartSlice';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -32,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     display: 'flex',
     flexDirection: 'column',
-    minWidth: '60%',
+    minWidth: '35%',
     flex: '1',
   },
 }));
@@ -47,6 +52,24 @@ function CartListItem({ product }) {
       })
     );
   };
+  const handleIncreaseItemClick = () => {
+    dispatch(
+      changeItemQuantity({
+        id: product.id,
+        option: product.option,
+        quantity: product.quantity + 1,
+      })
+    );
+  };
+  const handleDecreaseItemClick = () => {
+    dispatch(
+      changeItemQuantity({
+        id: product.id,
+        option: product.option,
+        quantity: product.quantity - 1,
+      })
+    );
+  };
   return (
     <Box className={classes.root}>
       <Box className={classes.imageBox}>
@@ -58,24 +81,45 @@ function CartListItem({ product }) {
         />
       </Box>
       <Box className={classes.title}>
-        <Typography variant="h6" noWrap>
+        <Typography
+          variant="body1"
+          fontWeight="bold"
+          noWrap
+        >
           {product.title}
         </Typography>
-        <Typography variant="h6" noWrap>
+        <Typography variant="body1" noWrap>
           {product.option}
         </Typography>
       </Box>
       <Box>
-        <Typography align="center">
+        <Typography
+          sx={{ display: 'flex' }}
+          align="center"
+        >
+          <Button
+            onClick={handleDecreaseItemClick}
+            size="small"
+            disabled={product.quantity === 1}
+          >
+            <RemoveCircleIcon />
+          </Button>
           x{product.quantity}
+          <Button
+            onClick={handleIncreaseItemClick}
+            size="small"
+          >
+            <AddCircleIcon />
+          </Button>
         </Typography>
-        <Typography>
+        <Typography align="center">
           {formatCurrency(
             product.quantity * product.price
           )}
         </Typography>
         <Button
           size="small"
+          fullWidth
           onClick={handleDeleteClick}
         >
           Delete

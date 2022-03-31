@@ -34,6 +34,7 @@ function HeaderCartMenu(props) {
   return (
     <div>
       <Badge
+        sx={{ marginLeft: '10px' }}
         badgeContent={currentTotalCartItem}
         color="primary"
         onClick={handleClick}

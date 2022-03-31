@@ -15,6 +15,8 @@ import HomePage from './features/HomePage';
 import Products from './features/Products';
 import UserProfile from './features/UserProfile';
 import Cart from './features/Cart';
+import OrderComplete from './features/OrderComplete';
+import Profile from './features/Profile';
 
 function App() {
   const currentColor =
@@ -75,6 +77,14 @@ function App() {
             <Route
               path="/cart/*"
               element={<Cart />}
+            />
+            <Route
+              path="/thanks/*"
+              element={<OrderComplete />}
+            />
+            <Route
+              path="/profile/*"
+              element={<Profile />}
             />
           </Routes>
         </Container>

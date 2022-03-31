@@ -20,14 +20,19 @@ function HeaderUserMenu(props) {
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
+  const handleCartClick = () => {
+    setAnchorEl(null);
+    navigate('/cart');
+  };
+  const handleProfileClick = () => {
+    setAnchorEl(null);
+    navigate('/profile');
+  };
   const handleLogoutClick = () => {
     dispatch(logout());
-    console.log('logout');
-    setAnchorEl(null);
-    navigate('/');
   };
   return (
-    <Box>
+    <Box sx={{ marginLeft: '10px' }}>
       <IconButton
         onClick={handleClick}
         color="inherit"
@@ -39,13 +44,16 @@ function HeaderUserMenu(props) {
         open={openMenu}
         onClose={handleCloseMenu}
       >
-        <MenuItem onClick={handleCloseMenu}>
+        <MenuItem onClick={handleCartClick}>
+          My Cart
+        </MenuItem>
+        <MenuItem onClick={handleProfileClick}>
           Profile
         </MenuItem>
-        <MenuItem onClick={handleCloseMenu}>
-          My account
-        </MenuItem>
-        <MenuItem onClick={handleLogoutClick}>
+        <MenuItem
+          color="primary"
+          onClick={handleLogoutClick}
+        >
           Logout
         </MenuItem>
       </Menu>

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   text: {
-    marginTop: '12%',
+    marginTop: '5vh',
     padding: '0 8px',
   },
   logo: {
